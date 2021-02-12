@@ -14,8 +14,8 @@ Feature:
 
 Practice: Spring Data JPA - H2 In memory database
    Things to implement:  
+   
     - CRUD
-    
     - Derived query: String operators, relational operators, logical operators, date comparison (before, after, between), ordering results (order by), limiting query results (top, first),transversing nested properties (many to one, one to one,...)
     
     - Additional query techniques
