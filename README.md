@@ -16,6 +16,8 @@ Practice: Spring Data JPA - H2 In memory database
    Things to implement:  
    
     - CRUD
+       Retrieve, persist, modify, remove entities.
+       Hibernate use save method for both persist and modify. If the entity has primary key value then it will check if this value exists or not. If not, it will insert.                Otherwise, it will update record.
     - Derived query: String operators, relational operators, logical operators, date comparison (before, after, between), ordering results (order by), limiting query results (top, first),transversing nested properties (many to one, one to one,...)
     
     - Additional query techniques
