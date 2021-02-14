@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @SpringBootApplication
 @EnableJpaRepositories("com.namhd.repository")
@@ -23,6 +24,8 @@ public class SpringDataJpaApplication {
 	public static void main(String[] args) {
 		ApplicationContext context = SpringApplication.run(SpringDataJpaApplication.class, args);
 		BookRepository repository = context.getBean(BookRepository.class);
+
+		//CRUD operators
 		Book book = new Book();
 		book.setTitle("The Manager's Path");
 		book.setPageCount(200);
@@ -43,7 +46,50 @@ public class SpringDataJpaApplication {
 		ids.add(2L);
 		repository.deleteInBatch(repository.findAllById(ids));
 
-		System.out.println("=======Book list: " + repository.findAll());
+		//String Operators
+		List<Book> result;
+		result = repository.findByTitle("The Manager's Path");
+		System.out.println("======FindByTitle result:");
+		for(Book b : result) {
+			System.out.println(b);
+		}
+
+		result = repository.findByTitleLike("%a%");
+		System.out.println("======FindByTitleLike result:");
+		for(Book b : result) {
+			System.out.println(b);
+		}
+
+		result = repository.findByTitleContaining("Manager");
+		System.out.println("======FindByTitleContaining result:");
+		for(Book b : result) {
+			System.out.println(b);
+		}
+
+		result = repository.findByTitleStartingWith("Factfullness");
+		System.out.println("======FindByTitleStartingWith result:");
+		for(Book b : result) {
+			System.out.println(b);
+		}
+
+		result = repository.findByTitleIgnoreCase("The manager's path");
+		System.out.println("======FindByTitleIgnoreCase result:");
+		for(Book b : result) {
+			System.out.println(b);
+		}
+
+		//Relational Operators
+
+		//Logical Operators
+
+		//Date comparisons
+
+		//Ordering results
+
+		//Limiting Query results
+
+		//Traversing nested properties
+
 	}
 
 }
