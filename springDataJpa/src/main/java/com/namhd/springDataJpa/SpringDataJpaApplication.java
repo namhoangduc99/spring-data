@@ -13,6 +13,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -21,7 +23,7 @@ import java.util.List;
 @EnableJpaRepositories("com.namhd.repository")
 @EntityScan("com.namhd.entity")
 public class SpringDataJpaApplication {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ParseException {
 		ApplicationContext context = SpringApplication.run(SpringDataJpaApplication.class, args);
 		BookRepository repository = context.getBean(BookRepository.class);
 
@@ -79,15 +81,58 @@ public class SpringDataJpaApplication {
 		}
 
 		//Relational Operators
+		result = repository.findByPageCountBetween(100, 200);
+		System.out.println("======FindByPageCountBetween result:");
+		for(Book b : result) {
+			System.out.println(b);
+		}
+
+		result = repository.findByPageCountGreaterThan(200);
+		System.out.println("======FindByPageCountGreaterThan result:");
+		for(Book b : result) {
+			System.out.println(b);
+		}
+
+		result = repository.findByPageCountGreaterThanEqual(200);
+		System.out.println("======findByPageCountGreaterThanEqual result:");
+		for(Book b : result) {
+			System.out.println(b);
+		}
 
 		//Logical Operators
+		result = repository.findByTitleContainingAndPageCountGreaterThan("Path", 200);
+		System.out.println("======findByTitleContainingAndPageCountGreaterThan result:");
+		for(Book b : result) {
+			System.out.println(b);
+		}
+
+		result = repository.findByTitleNot("ABC");
+		System.out.println("======findByTitleNot result:");
+		for(Book b : result) {
+			System.out.println(b);
+		}
 
 		//Date comparisons
+		Date date = new SimpleDateFormat("yyyy-mm-dd").parse("2001-01-01");
+		result = repository.findByPublishDateAfter(date);
+		System.out.println("======findByPublishDateAfter result:");
+		for(Book b : result) {
+			System.out.println(b);
+		}
 
 		//Ordering results
+		result = repository.findByTitleContainingOrderByPageCountAsc("Path");
+		System.out.println("======findByTitleContainingOrderByPageCountAsc result:");
+		for(Book b : result) {
+			System.out.println(b);
+		}
 
 		//Limiting Query results
-
+		result = repository.findTopByTitleContainingOrderByPriceAsc("t");
+		System.out.println("======findByTitleContainingOrderByPageCountAsc result:");
+		for(Book b : result) {
+			System.out.println(b);
+		}
 		//Traversing nested properties
 
 	}
