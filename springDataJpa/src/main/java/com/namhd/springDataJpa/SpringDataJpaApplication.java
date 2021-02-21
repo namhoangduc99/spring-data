@@ -161,6 +161,9 @@ public class SpringDataJpaApplication {
 		System.out.println("==========Sorting query result 2=========");
 		System.out.println(all2);
 
+
+
+		System.out.println("ALl books findByIds: " + repository.findByIds(3L, 4L, 6L));
 	}
 
 }
