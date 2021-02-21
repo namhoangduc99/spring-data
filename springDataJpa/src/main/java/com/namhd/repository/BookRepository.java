@@ -1,9 +1,16 @@
 package com.namhd.repository;
 
 import com.namhd.entity.Book;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
+import java.util.Collections;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 public interface BookRepository extends JpaRepository<Book, Long> {
@@ -48,4 +55,23 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     //we want to find all the book that its author firstName is "Alex"
     //public List<Book> findByAuthorFirstName(String firstName);
     //public List<Book> findByAuthor_Country(String country); --> make it clear for Spring JPA to build the query
+
+    //additional query techniques
+    //@Query
+    @Query("select b from Book b")
+    public List<Book> queryOne();
+
+    @Query("select b from Book b where b.pageCount > ?1")
+    public List<Book> queryTwo(int pageCount);
+
+    @Query("select b from Book b where b.title = :title")
+    public List<Book> queryThree(@Param("title") String title, Sort sort);
+
+    public List<Book> queryFour(@Param("date") Date publishDate, Pageable page);
+
+    public List<Book> queryFive(@Param("date1") Date date1, @Param("date2") Date date2, Pageable page);
+
+    public Page<Book> querySix(@Param("date") Date publishDate, Pageable page);
+
+    public Iterable<Book> querySeven(@Param("date") Date publishDate);
 }

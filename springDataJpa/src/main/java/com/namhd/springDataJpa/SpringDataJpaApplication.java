@@ -3,14 +3,13 @@ package com.namhd.springDataJpa;
 import com.namhd.entity.Book;
 import com.namhd.repository.BookRepository;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import java.math.BigDecimal;
 import java.text.ParseException;
@@ -129,11 +128,38 @@ public class SpringDataJpaApplication {
 
 		//Limiting Query results
 		result = repository.findTopByTitleContainingOrderByPriceAsc("t");
-		System.out.println("======findByTitleContainingOrderByPageCountAsc result:");
+		System.out.println("======findTopByTitleContainingOrderByPriceAsc result:");
 		for(Book b : result) {
 			System.out.println(b);
 		}
 		//Traversing nested properties
+
+		//Additional query techniques
+		result = repository.queryTwo(200);
+		System.out.println("======queryOne result=======");
+		System.out.println(result);
+
+		Date date1 = new SimpleDateFormat("yyyy-mm-dd").parse("1970-01-01");
+		Date date2 = new SimpleDateFormat("yyyy-mm-dd").parse("2022-01-01");
+		result = repository.queryFive(date1, date2, PageRequest.of(0, 2, Sort.by(Sort.Direction.ASC, "price")));
+		System.out.println("========queryFive result========");
+		System.out.println(result);
+
+		Page<Book> all = repository.findAll(PageRequest.of(0,1));
+		System.out.println("=========Pageable query result========");
+		System.out.println(all.get().toArray()[0]);
+
+		result = repository.queryFour(date1, PageRequest.of(1,1));
+		System.out.println("=========Pageable query with @Query method=========");
+		System.out.println(result);
+
+		List<Book> all1 = repository.findAll(Sort.by("pageCount", "price"));
+		System.out.println("==========Sorting query result=========");
+		System.out.println(all1);
+
+		List<Book> all2 = repository.findAll(Sort.by(Sort.Direction.ASC, "pageCount").and(Sort.by(Sort.Direction.DESC, "price")));
+		System.out.println("==========Sorting query result 2=========");
+		System.out.println(all2);
 
 	}
 
