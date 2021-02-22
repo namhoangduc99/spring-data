@@ -33,3 +33,5 @@ Practice: Spring Data JPA - H2 In memory database
         Async Queries
         Auditing
         Modifying Queries (@MOdifying, @Query)
+      
+     See https://docs.spring.io/spring-data/data-commons/docs/1.6.1.RELEASE/reference/html/repositories.html for detail document about Spring Data
