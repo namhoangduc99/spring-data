@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-public interface BookRepository extends BaseRepository<Book, Long> {
+public interface BookRepository extends JpaRepository<Book, Long>, BookRepositoryCustom {
     public List<Book> findByTitle(String title);
 
     //derived query - string operator
